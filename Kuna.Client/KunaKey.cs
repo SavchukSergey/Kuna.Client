@@ -11,6 +11,12 @@ namespace Kuna.Client {
         public string PrivateKey { get; }
 
         public KunaKey(string publicKey, string privateKey) {
+            if (publicKey == null) {
+                throw new ArgumentNullException(nameof(publicKey));
+            }
+            if (privateKey == null) {
+                throw new ArgumentNullException(nameof(privateKey));
+            }
             PublicKey = publicKey;
             PrivateKey = privateKey;
         }
