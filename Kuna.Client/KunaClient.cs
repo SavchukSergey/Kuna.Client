@@ -68,8 +68,7 @@ namespace Kuna.Client {
 
         private async Task<T> FetchJsonGetAsync<T>(string url) {
             var response = await _client.GetAsync(url).ConfigureAwait(false);
-            var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-            return JsonConvert.DeserializeObject<T>(content);
+            return await ReadResponseAsync<T>(response).ConfigureAwait(false);
         }
 
         private Task<T> FetchAuthJsonGetAsync<T>(string url, KunaKey key) {
@@ -91,9 +90,19 @@ namespace Kuna.Client {
             uri = uri.AppendQuery("signature", signature);
             var request = new HttpRequestMessage(method, uri);
             var response = await _client.SendAsync(request).ConfigureAwait(false);
-            var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-            return JsonConvert.DeserializeObject<T>(content);
+            return await ReadResponseAsync<T>(response).ConfigureAwait(false);
         }
+
+        private async Task<T> ReadResponseAsync<T>(HttpResponseMessage response) {
+            var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            if (response.IsSuccessStatusCode) {
+                return JsonConvert.DeserializeObject<T>(content);
+            } else {
+                var errorMsg = JsonConvert.DeserializeObject<KunaErrorMessage>(content);
+                throw new KunaClientException(errorMsg.Error);
+            }
+        }
+
 
     }
 }
