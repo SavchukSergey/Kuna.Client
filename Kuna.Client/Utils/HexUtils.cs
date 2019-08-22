@@ -7,8 +7,9 @@ namespace Kuna.Client.Utils {
         private const string HEX = "0123456789abcdef";
 
         public static string ToHexString(this byte[] data) {
-            if (data == null)
-                throw new ArgumentNullException(nameof(data));
+            if (data == null) {
+                return null;
+            }
 
             var sb = new StringBuilder(data.Length * 2);
             foreach (var bt in data) {
@@ -19,12 +20,15 @@ namespace Kuna.Client.Utils {
         }
 
         public static byte[] FromHexString(string value) {
+            if (value == null) {
+                return null;
+            }
             var len = value.Length;
             var res = new byte[(len + 1) >> 1];
             for (var i = 0; i < len - 1; i += 2) {
                 var high = GetHexDigit(value[i]);
                 var low = GetHexDigit(value[i + 1]);
-                res[i / 2] = (byte)(high << 4 + low);
+                res[i / 2] = (byte)((high << 4) + low);
             }
             if ((len & 1) == 1) {
                 res[res.Length - 1] = (byte)(GetHexDigit(value[value.Length - 1]) << 4);

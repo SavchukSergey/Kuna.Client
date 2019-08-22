@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace Kuna.Client.Tests {
-    [TestFixture]
+    [TestFixture, Ignore("integration tests")]
     public partial class IntegrationTests {
 
         [Test]
