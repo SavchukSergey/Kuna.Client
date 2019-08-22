@@ -21,9 +21,10 @@ namespace Kuna.Client {
             PrivateKey = privateKey;
         }
 
-        public string GetSignature(HttpMethod method, Uri uri) {
-            var query = uri.Query.TrimStart('?');
-            var tbs = $"{method.ToString().ToUpperInvariant()}|{uri.LocalPath}|{query}";
+        public string GetSignature(HttpMethod method, KunaQuery query) {
+            var uri = query.Uri;
+            var args = uri.Query.TrimStart('?');
+            var tbs = $"{method.ToString().ToUpperInvariant()}|{uri.LocalPath}|{args}";
 
             var key = Encoding.UTF8.GetBytes(PrivateKey);
             using (var alg = new HMACSHA256(key)) {
