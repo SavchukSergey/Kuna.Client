@@ -20,10 +20,11 @@ namespace Kuna.Client {
         }
 
         public async Task<DateTime> GetTimestampAsync() {
-            var response = await _client.GetAsync("https://kuna.io/api/v2/timestamp").ConfigureAwait(false);
-            var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-            var timestamp = long.Parse(content);
-            return DateTimeUtils.FromUnixTimestamp(timestamp);
+            using (var response = await _client.GetAsync("https://kuna.io/api/v2/timestamp").ConfigureAwait(false)) {
+                var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                var timestamp = long.Parse(content);
+                return DateTimeUtils.FromUnixTimestamp(timestamp);
+            }
         }
 
         public Task<MarketData> GetMarketDataAsync(string market) {
@@ -111,8 +112,9 @@ namespace Kuna.Client {
             var request = new HttpRequestMessage(method, query.Uri) {
                 Content = content
             };
-            var response = await _client.SendAsync(request).ConfigureAwait(false);
-            return await ReadResponseAsync<T>(response).ConfigureAwait(false);
+            using (var response = await _client.SendAsync(request).ConfigureAwait(false)) {
+                return await ReadResponseAsync<T>(response).ConfigureAwait(false);
+            }
         }
 
         private async Task<T> ReadResponseAsync<T>(HttpResponseMessage response) {

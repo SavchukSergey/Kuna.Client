@@ -8,6 +8,7 @@
     <Company />
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <Version>1.0.3</Version>
+    <Description>kuna.io api client library</Description>
   </PropertyGroup>
 
   <ItemGroup>
