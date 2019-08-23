@@ -43,7 +43,7 @@ namespace Kuna.Client {
             return _transport.PlaceBuyOrderAsync(volume, _market, price, key);
         }
 
-        public Task<Order> PlaceSellAsync(decimal volume, decimal price, KunaKey key) {
+        public Task<Order> PlaceSellOrderAsync(decimal volume, decimal price, KunaKey key) {
             return _transport.PlaceSellOrderAsync(volume, _market, price, key);
         }
 
