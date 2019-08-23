@@ -60,6 +60,24 @@ namespace Kuna.Client {
             return FetchAuthJsonAsync<Order>(HttpMethod.Post, query, key);
         }
 
+        public Task<Order> PlaceBuyOrderAsync(decimal volume, string market, decimal price, KunaKey key) {
+            var query = new KunaQuery("https://kuna.io/api/v2/orders")
+                .AddQuery("side", "buy")
+                .AddQuery("volume", volume)
+                .AddQuery("market", market)
+                .AddQuery("price", price);
+            return FetchAuthJsonAsync<Order>(HttpMethod.Post, query, key);
+        }
+
+        public Task<Order> PlaceSellOrderAsync(decimal volume, string market, decimal price, KunaKey key) {
+            var query = new KunaQuery("https://kuna.io/api/v2/orders")
+                .AddQuery("side", "sell")
+                .AddQuery("volume", volume)
+                .AddQuery("market", market)
+                .AddQuery("price", price);
+            return FetchAuthJsonAsync<Order>(HttpMethod.Post, query, key);
+        }
+
         public Task<Order> CancelOrderAsync(string orderId, KunaKey key) {
             var query = new KunaQuery("https://kuna.io/api/v2/order/delete")
                 .AddQuery("id", orderId);
