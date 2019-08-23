@@ -38,7 +38,11 @@
                 "test",
                 "${workspaceFolder}/Kuna.Client.Tests/Kuna.Client.Tests.csproj"
             ],
-            "problemMatcher": "$msCompile"
+            "problemMatcher": "$msCompile",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
         }
     ]
 }
