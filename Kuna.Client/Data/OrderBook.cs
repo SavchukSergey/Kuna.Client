@@ -1,5 +1,5 @@
 using System;
-using Kuna.Client.Converters;
+using Kuna.Client.Serialization.Converters;
 using Newtonsoft.Json;
 
 namespace Kuna.Client {

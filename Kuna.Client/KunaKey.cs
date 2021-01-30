@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
@@ -10,6 +11,8 @@ namespace Kuna.Client {
         public string PublicKey { get; }
         public string PrivateKey { get; }
 
+        private readonly byte[] _privateKeyBytes;
+
         public KunaKey(string publicKey, string privateKey) {
             if (publicKey == null) {
                 throw new ArgumentNullException(nameof(publicKey));
@@ -19,18 +22,16 @@ namespace Kuna.Client {
             }
             PublicKey = publicKey;
             PrivateKey = privateKey;
+            _privateKeyBytes = Encoding.UTF8.GetBytes(privateKey);
         }
 
-        public string GetSignature(HttpMethod method, KunaQuery query) {
-            var uri = query.Uri;
-            var args = uri.Query.TrimStart('?');
-            var tbs = $"{method.ToString().ToUpperInvariant()}|{uri.LocalPath}|{args}";
-
-            var key = Encoding.UTF8.GetBytes(PrivateKey);
-            using (var alg = new HMACSHA256(key)) {
-                var hash = alg.ComputeHash(Encoding.UTF8.GetBytes(tbs));
-                return hash.ToHexString();
-            }
+        public string GetSignature(HttpRequestMessage requestMessage, string body = "{}") {
+            var apiPath = requestMessage.RequestUri.AbsolutePath;
+            var nonce = requestMessage.Headers.GetValues("kun-nonce").FirstOrDefault();
+            using var alg = new HMACSHA384(_privateKeyBytes);
+            var tbs = $"{apiPath}{nonce}{body}";
+            var hash = alg.ComputeHash(Encoding.UTF8.GetBytes(tbs));
+            return hash.ToHexString();
         }
 
     }

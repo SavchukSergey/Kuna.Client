@@ -2,7 +2,7 @@ using System;
 using Kuna.Client.Utils;
 using Newtonsoft.Json;
 
-namespace Kuna.Client.Converters {
+namespace Kuna.Client.Serialization.Converters {
     public class UnixDateTimeConverter : JsonConverter<DateTime> {
 
         public override DateTime ReadJson(JsonReader reader, Type objectType, DateTime existingValue, bool hasExistingValue, JsonSerializer serializer) {

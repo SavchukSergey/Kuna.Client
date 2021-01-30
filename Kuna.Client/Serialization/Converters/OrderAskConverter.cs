@@ -1,10 +1,10 @@
 using System;
 using Newtonsoft.Json;
 
-namespace Kuna.Client.Converters {
-    public class OrderBidConverter : JsonConverter<OrderBid> {
+namespace Kuna.Client.Serialization.Converters {
+    public class OrderAskConverter : JsonConverter<OrderAsk> {
 
-        public override OrderBid ReadJson(JsonReader reader, Type objectType, OrderBid existingValue, bool hasExistingValue, JsonSerializer serializer) {
+        public override OrderAsk ReadJson(JsonReader reader, Type objectType, OrderAsk existingValue, bool hasExistingValue, JsonSerializer serializer) {
             if (reader.TokenType == JsonToken.StartArray) {
 
                 var price = reader.ReadAsDecimal() ?? 0.0m;
@@ -13,16 +13,17 @@ namespace Kuna.Client.Converters {
                 reader.Skip();
                 reader.Read();
 
-                return new OrderBid {
+                return new OrderAsk {
                     Price = price,
                     Amount = amount
                 };
+
             }
 
             return null;
         }
 
-        public override void WriteJson(JsonWriter writer, OrderBid value, JsonSerializer serializer) {
+        public override void WriteJson(JsonWriter writer, OrderAsk value, JsonSerializer serializer) {
             writer.WriteValue(1);
         }
 

@@ -15,45 +15,45 @@ namespace Kuna.Client {
             return new KunaMarketAuthClient(_transport, _market, key);
         }
 
-        public Task<MarketData> GetMarketDataAsync() {
-            return _transport.GetMarketDataAsync(_market);
-        }
+        // public Task<MarketData> GetMarketDataAsync() {
+        //     return _transport.GetMarketDataAsync(_market);
+        // }
 
-        public Task<OrderBook> GetOrderBookAsync() {
-            return _transport.GetOrderBookAsync(_market);
-        }
+        // public Task<OrderBook> GetOrderBookAsync() {
+        //     return _transport.GetOrderBookAsync(_market);
+        // }
 
-        public Task<IList<Transaction>> GetTradeHistoryAsync() {
-            return _transport.GetTradeHistoryAsync(_market);
-        }
+        // public Task<IList<Transaction>> GetTradeHistoryAsync() {
+        //     return _transport.GetTradeHistoryAsync(_market);
+        // }
 
         public Task<UserInfo> GetMeAsync(KunaKey key) {
             return _transport.GetMeAsync(key);
         }
 
-        public Task<IList<Transaction>> GetMyTradesAsync(KunaKey key) {
-            return _transport.GetMyTradesAsync(_market, key);
-        }
+        // public Task<IList<Transaction>> GetMyTradesAsync(KunaKey key) {
+        //     return _transport.GetMyTradesAsync(_market, key);
+        // }
 
-        public Task<Order> PlaceOrderAsync(string side, decimal volume, decimal price, KunaKey key) {
-            return _transport.PlaceOrderAsync(side, volume, _market, price, key);
-        }
+        // public Task<Order> PlaceOrderAsync(string side, decimal volume, decimal price, KunaKey key) {
+        //     return _transport.PlaceOrderAsync(side, volume, _market, price, key);
+        // }
 
-        public Task<Order> PlaceBuyOrderAsync(decimal volume, decimal price, KunaKey key) {
-            return _transport.PlaceBuyOrderAsync(volume, _market, price, key);
-        }
+        // public Task<Order> PlaceBuyOrderAsync(decimal volume, decimal price, KunaKey key) {
+        //     return _transport.PlaceBuyOrderAsync(volume, _market, price, key);
+        // }
 
-        public Task<Order> PlaceSellOrderAsync(decimal volume, decimal price, KunaKey key) {
-            return _transport.PlaceSellOrderAsync(volume, _market, price, key);
-        }
+        // public Task<Order> PlaceSellOrderAsync(decimal volume, decimal price, KunaKey key) {
+        //     return _transport.PlaceSellOrderAsync(volume, _market, price, key);
+        // }
 
-        public Task<Order> CancelOrderAsync(string orderId, KunaKey key) {
-            return _transport.CancelOrderAsync(orderId, key);
-        }
+        // public Task<Order> CancelOrderAsync(string orderId, KunaKey key) {
+        //     return _transport.CancelOrderAsync(orderId, key);
+        // }
 
-        public Task<IList<Order>> GetActiveOrderAsync(KunaKey key) {
-            return _transport.GetActiveOrderAsync(_market, key);
-        }
+        // public Task<IList<Order>> GetActiveOrderAsync(KunaKey key) {
+        //     return _transport.GetActiveOrderAsync(_market, key);
+        // }
 
     }
 }
